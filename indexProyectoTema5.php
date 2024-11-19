@@ -39,7 +39,7 @@
                         <th>Fichero de configuración de la DB (PDO)</th>                   
                     </tr>
                     <tr>
-                        <td></td>      
+                        <td><a></a></td>      
                     </tr>
                 </table>
                 <br>
