@@ -16,9 +16,9 @@ Proyecto centrado en el trabajo con **Autentificación de Usuarios** y **Control
 
 ## Funcionalidades
 
-- Establecer conexión a una base de datos
-- Autenticación de usuarios
-- Control de acceso
+- Establecer conexión a una **base de datos**
+- **Autenticación de usuarios**
+- **Control de acceso**
 - Uso de **Cookies**
 - Uso de **Sesiones**
 - Configuración y uso de **Xdebug**
@@ -43,7 +43,7 @@ Proyecto centrado en el trabajo con **Autentificación de Usuarios** y **Control
 
 ### Entorno de Desarrollo (Local)
 
-[http://daw219.sauces.local/219DWESProyectoTema5/indexProyectoTema5.php](http://daw219.sauces.local/219DWESProyectoTema5/indexProyectoTema5.php)
+[http://daw202.isauces.local/219DWESProyectoTema5/indexProyectoTema5.php](http://daw202.isauces.local/219DWESProyectoTema5/indexProyectoTema5.php)
 
 ### Entorno de Explotación (Local)
 
