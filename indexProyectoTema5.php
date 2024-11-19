@@ -20,17 +20,17 @@
                     </tr>
                     <tr>
                         <td><a>Script creación BD</a></td>
-                        <td></td>
+                        <td><a href="mostrarcodigo/muestraScriptCreaDB.php"><img src="doc/show.png" alt="show"></a></td>
                         <td></td>
                     </tr>
                     <tr>
                         <td><a>Script carga BD</a></td>
-                        <td></td>                   
+                        <td><a href="mostrarcodigo/muestraScriptCargaInicialDB.php"><img src="doc/show.png" alt="show"></a></td>                   
                         <td></td>
                     </tr>
                     <tr>
                         <td><a>Script borrado BD</a></td>
-                        <td></td>
+                        <td><a href="mostrarcodigo/muestraScriptBorraDB.php"><img src="doc/show.png" alt="show"></a></td>
                         <td></td>
                     </tr>
                 </table>
@@ -53,14 +53,14 @@
                     <tr>
                         <td>0</td>
                         <td>Mostrar el contenido de las variables superglobales y phpinfo()</td>
-                        <td></td>
-                        <td></td>                       
+                        <td><a href="codigoPHP/ejercicio00.php"><img src="doc/play.png" alt="play"></a></td>
+                        <td><a href="mostrarcodigo/muestraEjercicio00.php"><img src="doc/show.png" alt="show"></a></td>                       
                     </tr>
                     <tr>
                         <td>1</td>
                         <td>Desarrollo de un control de acceso con identificación del usuario basado en la función header()</td>
-                        <td></td>
-                        <td></td>                      
+                        <td><a href="codigoPHP/ejercicio01.php"><img src="doc/play.png" alt="play"></a></td>
+                        <td><a href="mostrarcodigo/muestraEjercicio01.php"><img src="doc/show.png" alt="show"></a></td>                      
                     </tr>
                     <tr>
                         <td>2</td>

@@ -8,14 +8,14 @@
     </head>
     <body>
         <header>      
-            <h1 id="inicio">Mostrar el contenido de las variables superglobales y phpinfo()</h1>
+            <h1 id="inicio">Script Borrado DB</h1>
         </header>
         <main>
-            <section>
+             <section>
                 <?php
-                highlight_file("../codigoPHP/ejercicio00.php");
+                highlight_file("../scriptDB/BorraDB202DWESProyectoTema5.sql");
                 ?>
-            </section>       
+            </section>  
         </main>
         <footer>
             <div>
