@@ -34,7 +34,7 @@ Proyecto centrado en el trabajo con **Autentificación de Usuarios** y **Control
 
 ### Backend
 
-- **PHP 7.4**
+- **PHP 8.3**
 - **MySQL 8.0**
 
 ---
