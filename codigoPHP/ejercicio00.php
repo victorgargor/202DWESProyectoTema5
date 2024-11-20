@@ -13,39 +13,74 @@
         <main>
             <section>
                 <?php
-                    /**
-                     * @author Víctor García Gordón
-                     * @version Fecha de última modificación 19/11/2024
-                     */
-                    // Función para imprimir de manera ordenada las superglobales no vacías
-                    function mostrarSuperglobal($nombre, $variable) {
-                        if (!empty($variable)) {
-                            echo "<h2>$$nombre</h2>";
-                            echo '<table border="1" style="border-collapse: collapse;">';
-                            foreach ($variable as $key => $value) {
-                                echo "<tr><td style='padding: 5px;'><strong>$key</strong></td><td style='padding: 5px;'>$value</td></tr>";
-                            }
-                            echo '</table>';
+
+                /**
+                 * @author Víctor García Gordón
+                 * @version Fecha de última modificación 19/11/2024
+                 */
+                // Función para imprimir de manera ordenada las superglobales no vacías
+                function mostrarSuperglobal($nombre, $variable) {
+                    if (!empty($variable)) {
+                        echo "<h2>$$nombre</h2>";
+                        echo '<table border="1" style="border-collapse: collapse;">';
+                        foreach ($variable as $key => $value) {
+                            echo "<tr><td style='padding: 5px;'><strong>$key</strong></td><td style='padding: 5px;'>$value</td></tr>";
                         }
+                        echo '</table>';
                     }
+                }
 
-                    // Mostrar el contenido de las variables superglobales solo si tienen contenido
+                // Comprobar que están llenas y mostrar las variables superglobales 
+                if (isset($_SERVER)) {
                     mostrarSuperglobal('SERVER', $_SERVER);
-                    mostrarSuperglobal('GET', $_GET);
-                    mostrarSuperglobal('POST', $_POST);
-                    mostrarSuperglobal('FILES', $_FILES);
-                    mostrarSuperglobal('COOKIE', $_COOKIE);
-                    // Comprobar si la superglobal SESSION está definida antes de intentar acceder a ella
-                    if (isset($_SESSION)) {
-                        mostrarSuperglobal('SESSION', $_SESSION);
-                    } else {
-                        echo '<h2 style="color:lightcoral;">La variable $SESSION no está disponible </h2>';
-                    }
-                    mostrarSuperglobal('ENV', $_ENV);
-                    mostrarSuperglobal('REQUEST', $_REQUEST);
+                } else {
+                    echo '<h2 style="color:lightcoral;">La variable $_SERVER está vacía </h2>';
+                }
 
-                    // Mostrar la configuración de PHP
-                    phpinfo();
+                if (isset($_GET)) {
+                    mostrarSuperglobal('GET', $_GET);
+                } else {
+                    echo '<h2 style="color:lightcoral;">La variable $_GET está vacía </h2>';
+                }
+
+                if (isset($_POST)) {
+                    mostrarSuperglobal('POST', $_POST);
+                } else {
+                    echo '<h2 style="color:lightcoral;">La variable $_POST está vacía </h2>';
+                }
+
+                if (isset($_FILES)) {
+                    mostrarSuperglobal('FILES', $_FILES);
+                } else {
+                    echo '<h2 style="color:lightcoral;">La variable $_FILES está vacía </h2>';
+                }
+
+                if (isset($_COOKIE)) {
+                    mostrarSuperglobal('COOKIE', $_COOKIE);
+                } else {
+                    echo '<h2 style="color:lightcoral;">La variable $_COOKIE está vacía </h2>';
+                }
+
+                if (isset($_SESSION)) {
+                    mostrarSuperglobal('SESSION', $_SESSION);
+                } else {
+                    echo '<h2 style="color:lightcoral;">La variable $_SESSION está vacía </h2>';
+                }
+
+                if (isset($_ENV)) {
+                    mostrarSuperglobal('ENV', $_ENV);
+                } else {
+                    echo '<h2 style="color:lightcoral;">La variable $_ENV está vacía </h2>';
+                }
+
+                if (isset($_REQUEST)) {
+                    mostrarSuperglobal('REQUEST', $_REQUEST);
+                } else {
+                    echo '<h2 style="color:lightcoral;">La variable $_REQUEST está vacía </h2>';
+                }
+
+                // Mostrar la configuración de PHP
+                phpinfo();
                 ?>
             </section>
         </main>

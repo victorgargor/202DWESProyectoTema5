@@ -1,114 +1,94 @@
 <?php
-// Importamos la configuración de la base de datos
+/**
+ * @author Víctor García Gordón
+ * @version Fecha de última modificación 20/11/2024
+ */
+// Configuración de conexión con la base de datos
 require_once '../config/ConfDBPDO.php';
-// Incluimos la libreria de validacion de formularios
-require_once('../core/231018libreriaValidacion.php');
+
 try {
-    // Establecer la conexión PDO
+    // Establecemos la conexión a la base de datos mediante PDO
     $miDB = new PDO(DSN, USER, PASSWORD);
-} catch (PDOException $excepcion) {
-    echo "<p class='mensaje-error'>Error: " . $excepcion->getMessage() . "</p>";
-    echo "<p class='mensaje-error'>Código de error: " . $excepcion->getCode() . "</p><br/>";
-}
 
-// Inicialización de variables
-$entradaOK = true;
-$aErrores = ['usuario' => '', 'password' => ''];
-$aRespuestas = ['usuario' => '', 'password' => ''];
-$mensajeExito = '';
-// Definición de constantes que utilizaremos en los métodos de la librería
-define('OBLIGATORIO', 1);
-define('OPCIONAL', 0);
-// Definición de constantes para validarPassword
-define('MAX_PASS', 16);
-define('MIN_PASS', 2);
-define('DEBIL', 1); // La contraseña admite solo letras
-define('NORMAL', 2); // La contraseña admite numeros y letras
-define('FUERTE', 3); // La contraseña admite si contiene al menos una letra mayúscula y un número
-
-if (isset($_REQUEST['enviar'])) {
-    // Recibir y limpiar los datos del formulario
-    $usuario = $_REQUEST['usuario'];
-    $password = $_REQUEST['password'];
-
-    $aErrores['usuario'] = validacionFormularios::comprobarAlfabetico($_REQUEST['usuario'], 1000, 1, OBLIGATORIO);
-    $aErrores['password'] = validacionFormularios::validarPassword($_REQUEST['password'], MAX_PASS, MIN_PASS, DEBIL, OBLIGATORIO);
-
-    // Recorremos el array de errores
-    foreach ($aErrores as $clave => $valor) {
-        if ($valor != null) {
-            $entradaOK = false;
-            //Limpiamos el campo si hay un error
-            $_REQUEST[$clave] = '';
-        }
+    // Verificamos si las credenciales de autenticación existen
+    if (!isset($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW'])) {
+        header('WWW-Authenticate: Basic realm="Mi dominio"');
+        header('HTTP/1.0 401 Unauthorized');
+        echo("<p style='color: red;'><b>Error en la Autenticación</b></p><br>");
+        echo('<button><a href="/202DWESProyectoTema5" style="text-decoration: none;">Volver</a></button>');
+        exit();
     }
 
-    // Si no hay errores, comprobar las credenciales
-    if ($entradaOK) {
-        /*// Preparar la consulta para verificar las credenciales
-        $resultadoConsulta = $miDB->prepare("SELECT T01_CodUsuario, T01_Password FROM T01_Usuario WHERE T01_CodUsuario = :usuario LIMIT 1");
-        // Ejecutar la consulta pasando el valor del usuario como parámetro
-        $resultadoConsulta->execute(['usuario' => $usuario]);
-        // Obtener el resultado de la consulta
-        $usuarioDB = $resultadoConsulta->fetch(PDO::FETCH_ASSOC);
+    // Utilizo una variable para el hash de 
+    $hashPassword = hash('sha256', $_SERVER['PHP_AUTH_USER'] . $_SERVER['PHP_AUTH_PW']);
+            
+    // Consultamos si el usuario existe en la base de datos y obtenemos el hash de la password
+   $sql = <<<SQL
+    SELECT T01_DescUsuario, T01_Password, T01_NumConexiones, T01_FechaHoraUltimaConexion
+    FROM T01_Usuario
+    WHERE T01_CodUsuario = '{$_SERVER['PHP_AUTH_USER']}'
+    AND T01_Password = '$hashPassword'
+    SQL;
 
-        // Verificar si el usuario existe
-        if ($usuarioDB) {
-            // Concatenar el nombre de usuario con la contraseña proporcionada
-            $usuarioContrasenaConcatenados = $usuario.$password;
-            // Cifrar la concatenación usando SHA-256
-            $usuarioContrasenaCifrada = hash('sha256', $usuarioContrasenaConcatenados);
-            // Verificar si la concatenación cifrada coincide con la almacenada en la base de datos
-            if (hash_equals($usuarioDB['T01_Password'], $usuarioContrasenaCifrada)) {
-                // Si la contraseña es correcta, mostrar mensaje de éxito
-                $mensajeExito = '¡Has iniciado sesión correctamente!';
-            } else {
-                // Si la contraseña es incorrecta, registrar un error y marcar que la entrada no es válida
-                $aErrores['password'] = 'Usuario o contraseña incorrectos.';
-                $entradaOK = false; // Establecer que la entrada no es válida
-            }
-        } else {
-            // Si el usuario no existe en la base de datos, registrar un error
-            $aErrores['usuario'] = 'Usuario no encontrado.';
-            $entradaOK = false; // Marcar que la entrada no es válida
-        }*/
+    $stmt = $miDB->prepare($sql);
+    $stmt->execute();
+
+    // Obtenemos el resultado de la consulta
+    $resultadoConsulta = $stmt->fetch(PDO::FETCH_OBJ);
+
+    if ($resultadoConsulta) {
+        // Si las credenciales son correctas, mostramos el mensaje de bienvenida con el número de conexiones y la última fecha de conexión
+        $nombreUsuario = $resultadoConsulta->T01_DescUsuario;
+        $numConexiones = $resultadoConsulta->T01_NumConexiones;
+        $fechaUltimaConexion = $resultadoConsulta->T01_FechaHoraUltimaConexion;
+
+        // Formateamos la fecha de la última conexión
+        $fechaUltimaConexionFormateada = date('d/m/Y H:i:s', strtotime($fechaUltimaConexion));
+
+        // Incrementamos el número de conexiones
+        $nuevoNumConexiones = $numConexiones + 1;
+
+        // Actualizamos el número de conexiones y la fecha de la última conexión en la base de datos
+        $sql2 = "UPDATE T01_Usuario SET T01_NumConexiones = ?, T01_FechaHoraUltimaConexion = NOW() WHERE T01_CodUsuario = ?";
+        $stmtActualizacion = $miDB->prepare($sql2);
+        $stmtActualizacion->execute([$nuevoNumConexiones, $_SERVER['PHP_AUTH_USER']]);
+
+        // Mostramos el mensaje formateado
+        echo "<p>¡Bienvenido <b>$nombreUsuario</b>! Esta es la <b>$nuevoNumConexiones</b> vez que se conecta y usted se conectó por última vez el <b>$fechaUltimaConexionFormateada.</b></p>";
+    } else {
+        // Si los datos son incorrectos
+        header('HTTP/1.1 401 Unauthorized');
+        echo("<p style='color: red;'><b>Error en la Autenticación</b></p><br>");
+        echo('<button><a href="/202DWESProyectoTema5" style="text-decoration: none;">Volver</a></button>');
+        exit();
     }
+} catch (PDOException $exception) {
+    // Si ocurre un error en la conexión con la base de datos
+    echo "<p class='mensaje-error'>Error: " . $exception->getMessage() . "</p>";
+    echo "<p class='mensaje-error'>Código de error: " . $exception->getCode() . "</p><br/>";
+} finally {
+    unset($miDB); // Cerramos la conexión con la base de datos
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../webroot/css/controlAcceso.css" type="text/css">
+        <link rel="stylesheet" href="../webroot/css/index.css" type="text/css">
         <title>Víctor García Gordón</title>
     </head>
     <body>
-        <header>
-            <h1>Desarrollo de un control de acceso con identificación del usuario basado en la función header() y en el uso de una tabla “Usuario” de la base de datos. (PDO)</h1>
-        </header>
         <main>
-            <?php if ($mensajeExito) { ?>
-                <p style="color:green;"><?php echo $mensajeExito; ?></p>
-            <?php } ?>
-
-            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" novalidate>
-                <div class="form-group">
-                    <label for="usuario">Usuario:</label>
-                    <input type="text" id="usuario" name="usuario" required 
-                           value="<?php echo (isset($_REQUEST['usuario']) ? $_REQUEST['usuario'] : ''); ?>" 
-                           style="background-color: lightyellow">                        
+            <section>
+                <div>
+                    <div>
+                        <div>
+                        </div>              
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="password">Contraseña:</label>
-                    <input type="password" id="password" name="password" required 
-                           value="<?php echo (isset($_REQUEST['password']) ? $_REQUEST['password'] : ''); ?>" 
-                           style="background-color: lightyellow">                      
-                </div>
-                <div class="form-group">
-                    <input id="enviar" name="enviar" type="submit" value="Iniciar Sesión">
-                </div>
-            </form>
+            </section>
         </main>
         <footer>
             <div>
@@ -120,4 +100,3 @@ if (isset($_REQUEST['enviar'])) {
         </footer>
     </body>
 </html>
-y 
