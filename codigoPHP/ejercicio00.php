@@ -31,49 +31,49 @@
                 }
 
                 // Comprobar que están llenas y mostrar las variables superglobales 
-                if (isset($_SERVER)) {
+                if (!empty($_SERVER)) {
                     mostrarSuperglobal('SERVER', $_SERVER);
                 } else {
                     echo '<h2 style="color:lightcoral;">La variable $_SERVER está vacía </h2>';
                 }
 
-                if (isset($_GET)) {
+                if (!empty($_GET)) {
                     mostrarSuperglobal('GET', $_GET);
                 } else {
                     echo '<h2 style="color:lightcoral;">La variable $_GET está vacía </h2>';
                 }
 
-                if (isset($_POST)) {
+                if (!empty($_POST)) {
                     mostrarSuperglobal('POST', $_POST);
                 } else {
                     echo '<h2 style="color:lightcoral;">La variable $_POST está vacía </h2>';
                 }
 
-                if (isset($_FILES)) {
+                if (!empty($_FILES)) {
                     mostrarSuperglobal('FILES', $_FILES);
                 } else {
                     echo '<h2 style="color:lightcoral;">La variable $_FILES está vacía </h2>';
                 }
 
-                if (isset($_COOKIE)) {
+                if (!empty($_COOKIE)) {
                     mostrarSuperglobal('COOKIE', $_COOKIE);
                 } else {
                     echo '<h2 style="color:lightcoral;">La variable $_COOKIE está vacía </h2>';
                 }
 
-                if (isset($_SESSION)) {
+                if (!empty($_SESSION)) {
                     mostrarSuperglobal('SESSION', $_SESSION);
                 } else {
                     echo '<h2 style="color:lightcoral;">La variable $_SESSION está vacía </h2>';
                 }
 
-                if (isset($_ENV)) {
+                if (!empty($_ENV)) {
                     mostrarSuperglobal('ENV', $_ENV);
                 } else {
                     echo '<h2 style="color:lightcoral;">La variable $_ENV está vacía </h2>';
                 }
 
-                if (isset($_REQUEST)) {
+                if (!empty($_REQUEST)) {
                     mostrarSuperglobal('REQUEST', $_REQUEST);
                 } else {
                     echo '<h2 style="color:lightcoral;">La variable $_REQUEST está vacía </h2>';
