@@ -1,0 +1,162 @@
+/* Estilos Generales */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    background-color: #f6f8fa; /* Fondo claro */
+    margin: 0;
+    padding: 0;
+    color: #24292f; /* Texto oscuro */
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra verticalmente */
+    align-items: center; /* Centra horizontalmente */
+    height: 100vh; /* Asegura que la página ocupe todo el alto de la ventana */
+    overflow: hidden;
+}
+
+/* Header */
+header {
+    background-color: #24292f; /* Fondo oscuro para el header */
+    color: #ffffff; /* Texto blanco en el header */
+    width: 100%; /* Asegura que el header ocupe todo el ancho */
+    padding: 20px 0;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Asegura que el header esté siempre encima del contenido */
+}
+
+header h1 {
+    font-size: 22px;
+    margin: 0;
+    padding: 0;
+}
+
+/* Contenedor principal */
+main {
+    padding: 20px;
+    background-color: #ffffff; /* Fondo blanco para el contenido */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    width: 100%;
+    max-width: 500px; /* Limita el ancho máximo */
+    margin: 80px 20px 20px 20px; /* Asegura que el contenido no quede detrás del header */
+    box-sizing: border-box;
+    text-align: center;
+}
+
+/* Formulario */
+form {
+    width: 100%;
+}
+
+/* Form Group */
+.form-group {
+    margin-bottom: 15px;
+}
+
+/* Labels */
+label {
+    font-size: 1em;
+    color: #24292f; /* Color de texto oscuro */
+    margin-bottom: 5px;
+    display: block;
+    text-align: left; /* Alineación del texto a la izquierda */
+}
+
+/* Inputs */
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+    background-color: #f9f9f9;
+    margin-top: 5px;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: #0366d6; /* Azul para el foco */
+    outline: none;
+}
+
+/* Error Message */
+span {
+    font-size: 0.9em;
+    color: #F85149; /* Rojo brillante para errores */
+    margin-top: 5px;
+    display: block;
+}
+
+/* Submit Button */
+input[type="submit"] {
+    background-color: #0366d6; /* Botón azul */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    width: 100%;
+    border-radius: 4px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
+}
+
+input[type="submit"]:hover {
+    background-color: #005bb5; /* Azul más oscuro al pasar el ratón */
+}
+
+/* Footer */
+footer {
+    background-color: #24292f; /* Fondo oscuro para el footer */
+    color: #ffffff; /* Texto blanco en el footer */
+    padding: 20px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+footer a {
+    color: #ffffff;
+    margin: 0 10px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+footer img {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+}
+
+/* Estilos para el error de autenticación */
+p[style*="color: red;"] {
+    color: #F85149; /* Rojo brillante para el error */
+    font-weight: bold;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 18px;
+    }
+
+    .form-group {
+        margin-bottom: 12px;
+    }
+
+    input[type="submit"] {
+        padding: 10px 15px;
+    }
+}
+

@@ -8,14 +8,14 @@
     </head>
     <body>
         <header>      
-            <h1 id="inicio">Desarrollo de un control de acceso con identificación del usuario basado en la función header() y en el uso de una tabla “Usuario” de la base de datos. (PDO)</h1>
+            <h1 id="inicio">Script Borrado DB</h1>
         </header>
         <main>
-            <section>
+             <section>
                 <?php
-                highlight_file("../codigoPHP/ejercicio02.php");
+                highlight_file("../scriptDB/BorraDB202DWESProyectoTema5.sql");
                 ?>
-            </section>       
+            </section>  
         </main>
         <footer>
             <div>

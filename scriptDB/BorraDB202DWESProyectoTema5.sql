@@ -1,0 +1,2 @@
+DROP USER  user202DWESProyectoTema5;
+DROP DATABASE DB202DWESProyectoTema5;
