@@ -69,8 +69,7 @@ try {
             echo "<p>¡Bienvenido de nuevo <b>$nombreUsuario</b>! Esta es la <b>$nuevoNumConexiones</b> vez que te conectas y te conectaste por última vez el <b>$fechaUltimaConexionFormateada.</b></p>";
         }
     } else {
-        // Si los datos son incorrectos
-        header('WWW-Authenticate: Basic realm="Mi dominio"');
+        
     }
 } catch (PDOException $exception) {
     // Si ocurre un error en la conexión con la base de datos
@@ -80,7 +79,6 @@ try {
     unset($miDB); // Cerramos la conexión con la base de datos
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
     <head>
